@@ -64,77 +64,65 @@ const galleryItems = [
     },
   ];
 
-const galleryContainer = document.querySelector('.js-gallery');
-const lightBox = document.querySelector('.js-lightbox')
-const lightBoxImage = document.querySelector('.lightbox__image');
-const btn = document.querySelector('[data-action="close-lightbox"]');
-const overlay = document.querySelector('.lightbox__overlay');
-
-
-
-
-const galleryMarkup = galleryItems;
-
-galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
-galleryContainer.addEventListener('click', onImageClick);
-btn.addEventListener('click', onModalClose);
-overlay.addEventListener('click', onModalClose);
-
-
-
-function makeGalleryMarkup(gallery) {
-    return gallery.map(({original, preview, description}) => {
-        return `
-        <li class="gallery__item">
-  <a
-    class="gallery__link"
-    href="${original}"
-  >
-    <img
-      class="gallery__image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>
-        `
-    }).join('')
-};
-
-function onImageClick(event) {
-    event.preventDefault();
-    const image = event.target;
-    if (!image.classList.contains('gallery__image')) {
-        return;
-    };
-
-    lightBox.classList.add('is-open');
-    lightBoxImage.src = image.getAttribute("data-source");
-    lightBoxImage.alt = image.alt;
-
-    addEventListener('keyup', onClick);
-
-}
-
-function onModalClose() {
-    lightBox.classList.remove('is-open');
-    lightBoxImage.src = '';
-    lightBoxImage.alt = '';
-
-    removeEventListener('keyup', onClick)
-}
-
-function onClick(event) {
-
-    if (event.code === 'Escape') {
-        onModalClose();
-    }
-
-    if (event.code === 'ArrowRight') {
-
-      
-    }
-        
+  const gallery = document.querySelector(".js-gallery")
+  const modal = document.querySelector(".js-lightbox")
+  const img = document.querySelector(".lightbox__image")
+  const btn = document.querySelector('[data-action="close-lightbox"]')
+  
+  const items = []
+  
+  galleryItems.forEach(item => {
+  const prev = item.preview
+  const origin = item.original
+  const descr = item.description
+    item = `
+  <li class="gallery__item">
+  <a href="#" class="gallery__link">
+  <img src="${prev}" data-source="${origin}" class="gallery__image" alt="${descr}"></a>
+  </li>`
     
-}
+    items.push(item)
+  });
+  
+  gallery.insertAdjacentHTML('afterbegin', items.join(" "))
+  gallery.addEventListener("click", onImgClick);
+  btn.addEventListener("click", onCloseModal)
+  
+  function onImgClick(event) { 
+    const targetImg = event.target;
+    console.log("event target: ", targetImg)
+    modal.classList.toggle("is-open")
+    img.src = targetImg.dataset.source
+  };
+  
+  function onCloseModal(event) {
+    const targetCloseBtn = event.target;
+    modal.classList.toggle("is-open")
+      img.src = ""
+  }
+
+
+
+  function onArrowRight() {
+    if (currentIndex + 1 > galleryItems.length - 1) {
+      currentIndex = 0;
+    } else {
+      currentIndex += 1;
+    }
+    lightBoxImgContent(
+      galleryItems[currentIndex].original,
+      galleryItems[currentIndex].description,
+    );
+  }
+  
+  function onArrowLeft() {
+    if (currentIndex - 1 < 0) {
+      currentIndex = galleryItems.length - 1;
+    } else {
+      currentIndex -= 1;
+    }
+    lightBoxImgContent(
+      galleryItems[currentIndex].original,
+      galleryItems[currentIndex].description,
+    );
+  }
