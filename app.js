@@ -104,6 +104,7 @@ const galleryItems = [
   }
 
 
+// Листание картинок с помощью клавиатуры
 
   function onArrowRight() {
     if (currentIndex + 1 > galleryItems.length - 1) {
@@ -113,7 +114,7 @@ const galleryItems = [
     }
     lightBoxImgContent(
       galleryItems[currentIndex].original,
-      galleryItems[currentIndex].description,
+      galleryItems[currentIndex].description
     );
   }
   
@@ -125,7 +126,7 @@ const galleryItems = [
     }
     lightBoxImgContent(
       galleryItems[currentIndex].original,
-      galleryItems[currentIndex].description,
+      galleryItems[currentIndex].description
     );
   }
 
