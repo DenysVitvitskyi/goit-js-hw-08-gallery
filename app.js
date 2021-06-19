@@ -83,6 +83,8 @@ const galleryItems = [
     
     items.push(item)
   });
+
+  
   
   gallery.insertAdjacentHTML('afterbegin', items.join(" "))
   gallery.addEventListener("click", onImgClick);
@@ -126,3 +128,14 @@ const galleryItems = [
       galleryItems[currentIndex].description,
     );
   }
+
+  // Закрытие модального окна через кнопку Esc
+
+  document.body.addEventListener('keyup', function (e) {
+    var key = e.keyCode;
+
+    if (key == 27) {
+        document.querySelector('.js-gallery').classList.remove("is-open");
+        document.querySelector('.js-lightbox').classList.remove("is-open");
+    };
+}, false);
