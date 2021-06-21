@@ -75,6 +75,7 @@ const galleryItems = [
   const prev = item.preview
   const origin = item.original
   const descr = item.description
+  
     item = `
   <li class="gallery__item">
   <a href="#" class="gallery__link">
@@ -140,3 +141,4 @@ const galleryItems = [
         document.querySelector('.js-lightbox').classList.remove("is-open");
     };
 }, false);
+
